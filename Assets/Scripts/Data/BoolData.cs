@@ -7,6 +7,5 @@ public class BoolData : ScriptableObject
 {
 	public bool value;
 
-	//public bool value { get => data; set => data = value; }
 	public static implicit operator bool(BoolData data) { return data.value; }
 }
