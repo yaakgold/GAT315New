@@ -23,7 +23,8 @@ public class World : MonoBehaviour
         float dt = Time.deltaTime;
 
         bodies.ForEach(body => body.Step(dt));
-        bodies.ForEach(body => Integrator.ExplicitEuler(body, dt));
+        //bodies.ForEach(body => Integrator.ExplicitEuler(body, dt));
+        bodies.ForEach(body => Integrator.SemiImplicitEuler(body, dt));
 
         bodies.ForEach(body => body.force = Vector2.zero);
         bodies.ForEach(body => body.acceleration = Vector2.zero);
