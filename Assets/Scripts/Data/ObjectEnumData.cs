@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ObjectEnum", menuName = "Variables/Enum/Object")]
+[CreateAssetMenu(fileName = "ObjectEnum", menuName = "Data/Enum/Object")]
 public class ObjectEnumData : EnumData
 {
 	public enum eType
