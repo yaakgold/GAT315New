@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
+    public BoolData simulate;
+
     static World instance;
     static public World Instance { get { return instance; } }
 
@@ -16,6 +18,8 @@ public class World : MonoBehaviour
 
 	void Update()
     {
+        if (!simulate.value) return;
+
         float dt = Time.deltaTime;
 
         bodies.ForEach(body => body.Step(dt));
