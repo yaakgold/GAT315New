@@ -2,14 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creator : MonoBehaviour
+public class Creator : Action
 {
     public GameObject original;
     public FloatData speed;
 
-    void Update()
+    bool action { get; set; } = false;
+
+	public override void StartAction()
+	{
+        action = true;
+
+    }
+
+	public override void StopAction()
+	{
+		action = false;
+	}
+
+	void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (action)
         {
             Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

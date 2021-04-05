@@ -18,6 +18,6 @@ public class Body : MonoBehaviour
 
 	public void Step(float dt)
 	{
-		acceleration = World.Instance.gravity + (force / mass);
+		acceleration = World.Instance.Gravity + (force / mass);
 	}
 }
