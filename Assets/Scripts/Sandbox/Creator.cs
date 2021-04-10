@@ -6,13 +6,13 @@ public class Creator : Action
 {
     public GameObject original;
     public FloatData speed;
+    public FloatData damping;
 
     bool action { get; set; } = false;
 
 	public override void StartAction()
 	{
         action = true;
-
     }
 
 	public override void StopAction()
@@ -30,8 +30,8 @@ public class Creator : Action
             if (gameObject.TryGetComponent<Body>(out Body body))
             {
                 Vector2 force = Random.insideUnitSphere.normalized * speed.value;
-
-                body.AddForce(force);
+                body.AddForce(force, Body.eForceMode.Velocity);
+                body.damping = damping.value;
                 World.Instance.bodies.Add(body);
             }
         }
