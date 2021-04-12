@@ -6,6 +6,7 @@ public class World : MonoBehaviour
 {
     public BoolData simulate;
     public FloatData gravity;
+    public FloatData gravitation;
     public FloatData fixedFPS;
     public StringData fpsText;
 
@@ -19,17 +20,6 @@ public class World : MonoBehaviour
 
     float timeAccumulator = 0;
 
-    // fps
-    float fps;
-    // fps frame count
-    int frame = 0;
-    const int frameMax = 100;
-    float time = 0;
-    // fps smoothing
-    float fpsAverage = 0;
-    float smoothing = 0.975f;
-
-
     private void Awake()
 	{
         instance = this;
@@ -37,25 +27,12 @@ public class World : MonoBehaviour
 
 	void Update()
     {
-        // fps
-        //fps = (1.0f / Time.deltaTime);
-        
-        // fps frame count
-        frame++;
-        time = time + Time.deltaTime;
-        if (frame == frameMax)
-        {
-            fps = frameMax / time;
-            fpsText.value = "FPS: " + fps.ToString("F1");
-            frame = 0;
-            time = 0;
-        }
-
-        // smoothing
-        //fpsAverage = (fpsAverage * smoothing) + (fps * (1.0f - smoothing));
-        //fpsText.value = "FPS: " + fpsAverage.ToString("F1");
+        Timer.Update();
+        fpsText.value = "FPS: " + Timer.fps.ToString("F1") + " : " + (Timer.dt * 1000.0f).ToString("F1") + " ms";
 
         if (!simulate.value) return;
+
+        GravitationalForce.ApplyForce(bodies, gravitation.value);
 
         timeAccumulator = timeAccumulator + Time.deltaTime;
         while (timeAccumulator >= fixedDeltaTime)
