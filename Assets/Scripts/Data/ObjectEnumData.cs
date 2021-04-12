@@ -13,7 +13,6 @@ public class ObjectEnumData : EnumData
 	}
 	public eValue value;
 
-	public override string id => value.ToString();
 	public override int index { get => (int)value; set => this.value = (eValue)value; }
 	public override string[] names => Enum.GetNames(typeof(eValue));
 }
