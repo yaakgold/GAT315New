@@ -18,7 +18,7 @@ public static class GravitationalForce
 				float force = G * ((bodyA.mass * bodyB.mass) / distanceSqr);
 
 				bodyA.AddForce(-direction.normalized * force, Body.eForceMode.Force);
-				bodyB.AddForce(direction.normalized * force, Body.eForceMode.Force);
+				bodyB.AddForce( direction.normalized * force, Body.eForceMode.Force);
 			}
 		}
 	}
