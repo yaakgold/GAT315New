@@ -9,8 +9,9 @@ public static class Timer
     public static float fps;
     // fps frame count
     public static int frame = 0;
-    public static int frameMax = 100;
+    public static readonly int frameMax = 100;
     public static float fpsTime = 0;
+    public static readonly float fpsTimeMax = 1.0f;
     // fps smoothing
     public static float fpsAverage = 0;
     public static float smoothing = 0.975f;
@@ -26,11 +27,21 @@ public static class Timer
         // fps (frame count)
         frame++;
         fpsTime = fpsTime + dt;
+        // update fps when frame count == frame max
         if (frame == frameMax)
         {
             fps = frameMax / fpsTime;
             frame = 0;
             fpsTime = 0;
         }
+
+        // fps (time)
+        // update fps when fps time == fps time max
+        //if (fpsTime >= fpsTimeMax)
+        //{
+        //	fps = frame / fpsTime;
+        //	frame = 0;
+        //	fpsTime = 0;
+        //}
     }
 }

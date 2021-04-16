@@ -1,0 +1,68 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public struct AABB
+{
+	public Vector2 center { get; set; }
+	public Vector2 size { get; set; }
+	public Vector2 extents { get => size * 0.5f; }
+
+	public Vector2 min { get => center - extents; }
+	public Vector2 max { get => center + extents; }
+
+	public AABB(Vector2 center, Vector2 size)
+	{
+		this.center = center;
+		this.size = size;
+	}
+
+	public bool Contains(AABB aabb)
+	{
+		return (aabb.max.x >= min.x && aabb.min.x <= max.x) &&
+			   (aabb.max.y >= min.y && aabb.min.y <= max.y);
+	}
+
+	public bool Contains(Vector2 point)
+	{
+		return (point.x >= min.x && point.x <= max.x) &&
+			   (point.y >= min.y && point.y <= max.y);
+	}
+
+	public bool Contains(Circle circle)
+	{
+		Vector2 v = circle.center - center;
+
+		// closest point on AABB to center of Circle
+		Vector2 closest = v;
+
+		// clamp point to edges of the AABB
+		closest.x = Mathf.Clamp(closest.x, -extents.x, extents.x);
+		closest.y = Mathf.Clamp(closest.y, -extents.y, extents.y);
+
+		// circle inside AABB
+		if (v == closest) return true;
+
+		Vector2 normal = v - closest;
+		float sqrDistance = normal.sqrMagnitude;
+		float sqrRadius = (circle.radius * circle.radius);
+
+		return (sqrDistance < sqrRadius);
+	}
+
+	public void Expand(Vector2 point)
+	{
+		SetMinMax(Vector2.Min(min, point), Vector2.Max(max, point));
+	}
+
+	public void Expand(AABB aabb)
+	{
+		SetMinMax(Vector2.Min(min, aabb.min), Vector2.Max(max, aabb.max));
+	}
+
+	public void SetMinMax(Vector2 min, Vector2 max)
+	{
+		size = (max - min);
+		center = min + extents;
+	}
+}
