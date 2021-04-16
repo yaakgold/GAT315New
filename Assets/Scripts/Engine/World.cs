@@ -41,11 +41,9 @@ public class World : MonoBehaviour
             bodies.ForEach(body => Integrator.SemiImplicitEuler(body, fixedDeltaTime));
 
             bodies.ForEach(body => body.shape.color = Color.white);
-            if (collision)
-			{
-                Collision.CreateContacts(bodies, out List<Contact> contacts);
-                contacts.ForEach(contact => { contact.bodyA.shape.color = Color.red; contact.bodyB.shape.color = Color.red; });
-			}
+
+            Collision.CreateContacts(bodies, out List<Contact> contacts);
+            contacts.ForEach(contact => { contact.bodyA.shape.color = Color.red; contact.bodyB.shape.color = Color.red; });
 
             timeAccumulator = timeAccumulator - fixedDeltaTime;
 		}

@@ -15,7 +15,7 @@ public struct Circle
 
 	public bool Contains(Vector2 point)
 	{
-		Vector3 direction = center - point;
+		Vector2 direction = center - point;
 		float sqrDistance = direction.sqrMagnitude;
 		float sqrRadius = (radius * radius);
 
@@ -24,7 +24,7 @@ public struct Circle
 
 	public bool Contains(Circle circle)
 	{
-		Vector3 direction = center - circle.center;
+		Vector2 direction = center - circle.center;
 		float sqrDistance = direction.sqrMagnitude;
 		float sqrRadius = ((radius + circle.radius) * (radius + circle.radius));
 
