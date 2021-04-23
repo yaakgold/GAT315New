@@ -22,6 +22,7 @@ public class BoolUI : MonoBehaviour
 
     private void Start()
     {
+        toggle.isOn = data.value;
         toggle.onValueChanged.AddListener(UpdateValue);
     }
 

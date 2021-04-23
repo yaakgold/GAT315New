@@ -21,12 +21,15 @@ public class IntUI : MonoBehaviour
             name = data.name;
             label.text = name;
         }
-        slider.minValue = min;
-        slider.maxValue = max;
     }
 
     private void Start()
     {
+        slider.minValue = min;
+        slider.maxValue = max;
+        slider.value = data;
+        valueText.text = data.value.ToString("F2");
+
         slider.onValueChanged.AddListener(UpdateValue);
     }
 

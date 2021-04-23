@@ -6,6 +6,7 @@ public class World : MonoBehaviour
 {
     public BoolData simulate;
     public BoolData collision;
+    public BoolData wrap;
     public FloatData gravity;
     public FloatData gravitation;
     public FloatData fixedFPS;
@@ -17,13 +18,15 @@ public class World : MonoBehaviour
     public Vector2 Gravity { get { return new Vector2(0, gravity); } }
     public List<Body> bodies { get; set; } = new List<Body>();
 
+    Vector2 size;
     float fixedDeltaTime { get { return 1.0f / fixedFPS; } }
     float timeAccumulator = 0;
 
     private void Awake()
 	{
         instance = this;
-	}
+        size = Camera.main.ViewportToWorldPoint(Vector2.one);
+    }
 
 	void Update()
     {
@@ -49,6 +52,10 @@ public class World : MonoBehaviour
             timeAccumulator = timeAccumulator - fixedDeltaTime;
 		}
 
+        if (wrap)
+		{
+            bodies.ForEach(body => body.position = Utilities.Wrap(body.position, -size, size));
+        }
         bodies.ForEach(body => { body.force = Vector2.zero; body.acceleration = Vector2.zero; } );
     }
 }
