@@ -8,6 +8,9 @@ public static class Collision
 	{
 		contacts = new List<Contact>();
 
+		Circle circleA = new Circle();
+		Circle circleB = new Circle();
+
 		for (int i = 0; i < bodies.Count - 1; i++)
 		{
 			for (int j = i + 1; j < bodies.Count; j++)
@@ -15,8 +18,14 @@ public static class Collision
 				Body bodyA = bodies[i];
 				Body bodyB = bodies[j];
 
-				Circle circleA = new Circle(bodyA.position, ((CircleShape)bodyA.shape).radius);
-				Circle circleB = new Circle(bodyB.position, ((CircleShape)bodyB.shape).radius);
+				if (bodyA.type == Body.eType.Static && bodyB.type == Body.eType.Static) continue;
+
+				circleA.center = bodyA.position;
+				circleA.radius = ((CircleShape)bodyA.shape).radius;
+				circleB.center = bodyB.position;
+				circleB.radius = ((CircleShape)bodyB.shape).radius;
+				//Circle circleA = new Circle(bodyA.position, ((CircleShape)bodyA.shape).radius);
+				//Circle circleB = new Circle(bodyB.position, ((CircleShape)bodyB.shape).radius);
 
 				if (circleA.Contains(circleB))
 				{
