@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class PanelSelect : MonoBehaviour
 {
     [System.Serializable]
@@ -15,31 +14,31 @@ public class PanelSelect : MonoBehaviour
 	}
 
     public KeyCode toggleKey;
-    public GameObject panel;
+    public GameObject masterPanel;
     public PanelInfo[] panelInfos;
 
-    private void Start()
+    void Start()
     {
         foreach (PanelInfo panelInfo in panelInfos)
-        {
+		{
             panelInfo.button.onClick.AddListener(delegate { ButtonEvent(panelInfo); });
-        }
+		}
     }
 
-	void Update()
+    void Update()
     {
         if (Input.GetKeyDown(toggleKey))
 		{
-            panel.SetActive(!panel.activeSelf);
-        }
+            masterPanel.SetActive(!masterPanel.activeSelf);
+		}
 
         foreach (PanelInfo panelInfo in panelInfos)
-        {
+		{
             if (Input.GetKeyDown(panelInfo.keyCode))
 			{
                 SetPanelActive(panelInfo);
 			}
-        }
+		}
     }
 
     void SetPanelActive(PanelInfo panelInfo)
@@ -48,7 +47,7 @@ public class PanelSelect : MonoBehaviour
 		{
             bool active = panelInfos[i].Equals(panelInfo);
             panelInfos[i].panel.SetActive(active);
-        }
+		}
 	}
 
     void ButtonEvent(PanelInfo panelInfo)
