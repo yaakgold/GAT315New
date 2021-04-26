@@ -10,6 +10,7 @@ public class Creator : Action
     public FloatData speed;
     public FloatData damping;
     public FloatData restitution;
+    public BodyTypeData type;
 
     bool action { get; set; } = false;
     bool oneTime { get; set; } = false;
@@ -38,9 +39,12 @@ public class Creator : Action
                 body.shape.size = size;
                 body.shape.density = density;
                 body.damping = damping;
-                //body.restitution = restitution;
+                body.restitution = restitution;
+                body.type = (Body.eType)type.value;
+
                 Vector2 force = Random.insideUnitSphere.normalized * speed.value;
                 body.AddForce(force, Body.eForceMode.Velocity);
+
                 World.Instance.bodies.Add(body);
             }
         }

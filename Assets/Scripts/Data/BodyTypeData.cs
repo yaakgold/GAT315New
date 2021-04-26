@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BodyEnum", menuName = "Data/Enum/Body")]
-public class BodyEnumData : EnumData
+[CreateAssetMenu(fileName = "BodyType", menuName = "Data/Enum/BodyType")]
+public class BodyTypeData : EnumData
 {
 	public enum eType
 	{
