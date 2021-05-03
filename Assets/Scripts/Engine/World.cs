@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class World : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class World : MonoBehaviour
     public StringData fpsText;
 
     static World instance;
-    static public World Instance { get { return instance; } }
+    static public World Instance { get => instance; }
 
     public Vector2 Gravity { get { return new Vector2(0, gravity); } }
     public List<Body> bodies { get; set; } = new List<Body>();
@@ -34,10 +36,12 @@ public class World : MonoBehaviour
         Timer.Update();
         fpsText.value = "FPS: " + Timer.fps.ToString("F1") + " : " + (Timer.dt * 1000.0f).ToString("F1") + " ms";
 
+        springs.ForEach(spring => spring.Draw());
+
         if (!simulate) return;
 
         GravitationalForce.ApplyForce(bodies, gravitation);
-        //springs.ForEach(spring => spring.ApplyForce());
+        springs.ForEach(spring => spring.ApplyForce());
 
         timeAccumulator = timeAccumulator + Time.deltaTime;
         while (timeAccumulator >= fixedDeltaTime)

@@ -12,8 +12,10 @@ public class Creator : Action
     public FloatData restitution;
     public BodyTypeData type;
 
+	public override eActionType actionType => eActionType.Creator;
+
     bool action { get; set; } = false;
-    bool oneTime { get; set; } = false;
+	bool oneTime { get; set; } = false;
 
 	public override void StartAction()
 	{

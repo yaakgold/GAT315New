@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Connector : Action
 {
+	public BoolData distanceLength;
+	public FloatData springK;
+	public FloatData springLength;
+
+
+	public override eActionType actionType => eActionType.Connector;
+
 	bool action { get; set; } = false;
 	Body source { get; set; } = null;
 
@@ -24,11 +31,12 @@ public class Connector : Action
 			Body destination = Utilities.GetBodyFromPosition(Input.mousePosition);
 			if (destination != null && destination != source)
 			{
-				float restLength = (source.position - destination.position).magnitude;
-				Create(source, destination, restLength, 0.5f);
+				float restLength = distanceLength ? (source.position - destination.position).magnitude : springLength;
+				Create(source, destination, restLength, springK);
 			}
 		}
 
+		source = null;
 		action = false;
 	}
 
@@ -37,9 +45,7 @@ public class Connector : Action
 		if (source != null)
 		{
 			Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			//m_lineRenderer.SetPosition(0, bodyAnchor.position);
-			//m_lineRenderer.SetPosition(1, position);
+			Lines.Instance.AddLine(source.position, position, Color.white, 0.1f);
 		}
 	}
 
