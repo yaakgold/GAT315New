@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class World : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class World : MonoBehaviour
     public StringData fpsText;
 
     static World instance;
-    static public World Instance { get { return instance; } }
+    static public World Instance { get => instance; }
 
     public Vector2 Gravity { get { return new Vector2(0, gravity); } }
     public List<Body> bodies { get; set; } = new List<Body>();
