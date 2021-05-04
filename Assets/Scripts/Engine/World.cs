@@ -34,10 +34,11 @@ public class World : MonoBehaviour
         Timer.Update();
         fpsText.value = "FPS: " + Timer.fps.ToString("F1") + " : " + (Timer.dt * 1000.0f).ToString("F1") + " ms";
 
+        springs.ForEach(spring => spring.Draw());
         if (!simulate) return;
 
         GravitationalForce.ApplyForce(bodies, gravitation);
-        //springs.ForEach(spring => spring.ApplyForce());
+        springs.ForEach(spring => spring.ApplyForce());
 
         timeAccumulator = timeAccumulator + Time.deltaTime;
         while (timeAccumulator >= fixedDeltaTime)
