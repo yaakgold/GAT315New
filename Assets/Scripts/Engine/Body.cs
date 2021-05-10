@@ -56,6 +56,6 @@ public class Body : MonoBehaviour
 	{
 		if (type != eType.Dynamic) return;
 
-		acceleration = World.Instance.Gravity + (force * inverseMass);
+		acceleration = acceleration + World.Instance.Gravity + (force * inverseMass);
 	}
 }

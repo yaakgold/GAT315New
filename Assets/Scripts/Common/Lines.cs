@@ -44,7 +44,12 @@ public class Lines : MonoBehaviour
 	public void AddLine(Vector3 start, Vector3 end, Color color, float width = 0.1f)
 	{
         LineRenderer lineRenderer = GetInactiveLineRenderer();
-        if (lineRenderer == null) return;
+        if (lineRenderer == null)
+        {
+            lineRenderer = CreateLineRenderer();
+            lineRenderers.Add(lineRenderer);
+            //return;
+        }
 
         lineRenderer.gameObject.SetActive(true);
 
