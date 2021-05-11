@@ -30,12 +30,12 @@ public struct Circle
 
 		return (sqrDistance <= sqrRadius);
 	}
+	/*	
+		public bool Contains(AABB aabb)
+		{
+			Vector2 direction = aabb.center - center;
+			Vector2 point = center + (direction.normalized * radius);
 
-	public bool Contains(AABB aabb)
-	{
-		Vector2 direction = aabb.center - center;
-		Vector2 point = center + (direction.normalized * radius);
-
-		return (aabb.Contains(point));
-	}
+			return (aabb.Contains(point));
+		}*/
 }

@@ -48,7 +48,6 @@ public class Lines : MonoBehaviour
         {
             lineRenderer = CreateLineRenderer();
             lineRenderers.Add(lineRenderer);
-            //return;
         }
 
         lineRenderer.gameObject.SetActive(true);

@@ -46,13 +46,13 @@ public class VectorField : Force
         if (!enable) return;
 
         Vector2 position = body.position;
-        position = (position + World.Instance.AABB.extents);
+        position = position + World.Instance.AABB.extents;
 
         int x = Mathf.FloorToInt(position.x);
         int y = Mathf.FloorToInt(position.y);
 
         if (x < 0 || x >= grid.GetLength(0) || y < 0 || y >= grid.GetLength(1)) return;
-        Debug.Log(forceMagnitude.value);
+
         Vector2 force = grid[x, y] * forceMagnitude;
         body.AddForce(force, Body.eForceMode.Acceleration);
     }
@@ -66,9 +66,9 @@ public class VectorField : Force
         {
             for (int y = 0; y < grid.GetLength(1); y++)
             {
-                float nx = noiseOffset + (x * noiseScale);
-                float ny = noiseOffset + (y * noiseScale);
-                float angle = Mathf.PerlinNoise(nx, ny) * Mathf.PI * 2;
+                float px = noiseOffset + (x * noiseScale);
+                float py = noiseOffset + (y * noiseScale);
+                float angle = Mathf.PerlinNoise(px, py) * Mathf.PI * 2;
 
                 Vector2 direction = Vector2.zero;
                 direction.x = Mathf.Cos(angle);

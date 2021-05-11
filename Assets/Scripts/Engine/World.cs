@@ -46,6 +46,7 @@ public class World : MonoBehaviour
         springs.ForEach(spring => spring.Draw());
         if (!simulate) return;
 
+        // forces
         GravitationalForce.ApplyForce(bodies, gravitation);
         forces.ForEach(force => bodies.ForEach(body => force.ApplyForce(body)));
         springs.ForEach(spring => spring.ApplyForce());
