@@ -9,6 +9,7 @@ public class World : MonoBehaviour
     public BoolData simulate;
     public BoolData collision;
     public BoolData wrap;
+    public BoolData debug;
     public FloatData gravity;
     public FloatData gravitation;
     public FloatData fixedFPS;
@@ -30,6 +31,7 @@ public class World : MonoBehaviour
     Vector2 size;
     float fixedDeltaTime { get { return 1.0f / fixedFPS; } }
     float timeAccumulator = 0;
+    BroadPhase broadPhase = new Quadtree();
 
     private void Awake()
 	{
@@ -61,13 +63,27 @@ public class World : MonoBehaviour
             if (collision)
 			{
                 bodies.ForEach(body => body.shape.color = Color.white);
-                Collision.CreateContacts(bodies, out List<Contact> contacts);
-                contacts.ForEach(contact => { contact.bodyA.shape.color = Color.red; contact.bodyB.shape.color = Color.red; });
+
+                broadPhase.Build(aabb, bodies);
+                Collision.CreateBroadPhaseContacts(broadPhase, bodies, out List<Contact> contacts);
+                if (debug)
+                {
+                    contacts.ForEach(contact => { Lines.Instance.AddLine(contact.bodyA.position, contact.bodyB.position, Color.white, 0.1f); });
+                }
+
+                Collision.CreateNarrowPhaseContacts(ref contacts);
+                contacts.ForEach(contact => Collision.UpdateContactInfo(ref contact));
                 ContactSolver.Resolve(contacts);
+                if (debug)
+                {
+                    contacts.ForEach(contact => { contact.bodyA.shape.color = Color.red; contact.bodyB.shape.color = Color.red; });
+                }
 			}
 
             timeAccumulator = timeAccumulator - fixedDeltaTime;
 		}
+
+        if (debug) broadPhase.Draw();
 
         if (wrap)
 		{
