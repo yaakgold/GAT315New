@@ -44,6 +44,31 @@ public class QuadtreeNode
 		}
 	}
 
+	public void Query(AABB aabb, List<Body> bodies)
+	{
+		// check if aabb is within node boundary, if not exit
+		if (!this.aabb.Contains(aabb)) return;
+
+		// check if aabb intersects node bodies aabb
+		// add intersecting node bodies into bodies
+		foreach (Body body in this.bodies)
+		{
+			if (body.shape.aabb.Contains(aabb))
+			{
+				bodies.Add(body);
+			}
+		}
+
+		// if subdivided, check child nodes
+		if (subdivided)
+		{
+			northeast.Query(aabb, bodies);
+			northwest.Query(aabb, bodies);
+			southeast.Query(aabb, bodies);
+			southwest.Query(aabb, bodies);
+		}
+	}
+
 	private void Subdivide()
 	{
 		float xo = aabb.extents.x * 0.5f;
@@ -55,5 +80,18 @@ public class QuadtreeNode
 		southwest = new QuadtreeNode(new AABB(new Vector2(aabb.center.x + xo, aabb.center.y - yo), aabb.extents), capacity);
 
 		subdivided = true;
+	}
+
+	public void Draw()
+	{
+		aabb.Draw(Color.white);
+
+		if (subdivided)
+		{
+			northeast.Draw();
+			northwest.Draw();
+			southeast.Draw();
+			southwest.Draw();
+		}
 	}
 }
